@@ -11,7 +11,7 @@ namespace Qna.DAL.Generic
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly AppDbContext context;
+        protected readonly AppDbContext context;
         protected DbSet<T> entities;
 
         public Repository(AppDbContext appdbcontext)
