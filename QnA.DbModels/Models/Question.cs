@@ -10,7 +10,10 @@ namespace QnA.DbModels
         public int Id { get; set; }
         public string Body { get; set; }
 
-        [ForeignKey]
+        [Required]
         public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public AppUser User { get; set; }
     }
 }
