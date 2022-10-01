@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QnA.BAL.Contract;
 using QnA.BAL.DTO;
@@ -30,7 +31,8 @@ namespace QnA.Controllers
         public async Task<IActionResult> Login(AuthRequestDTO authRequestDTO)
         {
             var tokens = await _authBL.Login(authRequestDTO);
-            return tokens == null ? BadRequest("User Not Found") : Ok(tokens);
+            return tokens == null ? BadRequest("User Name or Password is incorrect") : Ok(tokens);
         }
+
     }
 }
