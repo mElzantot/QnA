@@ -26,6 +26,24 @@ namespace Qna.DAL.Generic
             int result = await context.SaveChangesAsync();
             return result > 0 ? entity : null;
         }
+
+        public virtual async Task<ICollection<T>> AddRangeAsync(ICollection<T> newEntites)
+        {
+            entities.AddRange(newEntites);
+            var result = await context.SaveChangesAsync();
+            return result > 0 ? newEntites : null;
+        }
+
+        public virtual async Task<bool> Any()
+        {
+            return await entities.AnyAsync();
+        }
+
+        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate)
+        {
+            return await entities.Where(predicate).FirstOrDefaultAsync();
+        }
+
         public virtual async Task<ICollection<T>> GetAllAsync()
         {
             return await entities.AsNoTracking().ToListAsync();

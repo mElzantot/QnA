@@ -37,9 +37,9 @@ namespace QnA.BAL.Implementation
         }
 
 
-        public async Task<AuthResponseDTO> Login(AuthRequestDTO guest)
+        public async Task<AuthResponseDTO?> Login(AuthRequestDTO guest)
         {
-            var user = await _appuserRepo.GetByIdAsync(guest.UserName);
+            var user = await _appuserRepo.Get(u => u.Name == guest.UserName);
             if (user == null) return null;
             bool isAuthorized = _hashingService.HashCheck(user.PasswordHash, guest.Password);
             if (!isAuthorized) return null;
