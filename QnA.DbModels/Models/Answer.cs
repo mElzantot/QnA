@@ -6,6 +6,11 @@ namespace QnA.DbModels
     [Table("Answer")]
     public class Answer : BaseEntity
     {
+        public Answer()
+        {
+            this.Votes = new HashSet<Vote>();
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]
@@ -23,6 +28,7 @@ namespace QnA.DbModels
         [ForeignKey("QuestionId")]
         public Question Question { get; set; }
 
+        public virtual ICollection<Vote> Votes { get; set; }
 
     }
 }

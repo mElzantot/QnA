@@ -18,6 +18,7 @@ namespace Qna.DAL.DBContext
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<Vote> Votes { get; set; }
 
         #endregion
 

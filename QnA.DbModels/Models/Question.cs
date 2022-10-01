@@ -9,6 +9,7 @@ namespace QnA.DbModels
         [Key]
         public int Id { get; set; }
         public string Body { get; set; }
+        public int QuestionRank { get; set; }
 
         [Required]
         public string UserId { get; set; }
