@@ -23,4 +23,9 @@
     <ProjectReference Include="..\QnA.DbModels\QnA.DbModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repos Interfaces\" />
+    <Folder Include="Repos\" />
+  </ItemGroup>
+
 </Project>
