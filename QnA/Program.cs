@@ -7,7 +7,6 @@ using Qna.DAL.Repos;
 using Qna.DAL.Repos_Interfaces;
 using QnA.BAL.Contract;
 using QnA.BAL.Implementation;
-using QnA.BAL.Seeder;
 using QnA.BAL.Services;
 using System.Text;
 
@@ -44,12 +43,15 @@ builder.Services.AddAuthentication(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 builder.Services.AddScoped(typeof(IAppUserRepository), typeof(AppUserRepository));
+builder.Services.AddScoped(typeof(IQuestionRepository), typeof(QuestionRepository));
 builder.Services.AddScoped<ITokenServiceProvider, TokenServiceProvider>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
+builder.Services.AddScoped<IQuestionBL, QuestionBL>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

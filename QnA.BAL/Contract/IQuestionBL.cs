@@ -10,9 +10,9 @@ namespace QnA.BAL.Contract
 {
     public interface IQuestionBL
     {
-        Task<QuestionProfile> AddNewQuestion(string questionBody);
-        Task<IEnumerable<Question>> GetAllQuestionsAsync();
-        Task<Question> GetQuestionWithAnswersAsync(int id);
+        Task<QuestionProfile> AddNewQuestion(string questionBody, string userId);
+        Task<IEnumerable<QuestionProfile>> GetAllQuestionsAsync();
+        Task<QuestionProfile> GetQuestionWithAnswersAsync(int id);
         Task<bool> DeleteQuestion(int id);
 
     }
