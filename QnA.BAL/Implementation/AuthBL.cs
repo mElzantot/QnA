@@ -1,4 +1,5 @@
 ﻿using Qna.DAL.Generic;
+using Qna.DAL.Repos_Interfaces;
 using QnA.BAL.Contract;
 using QnA.BAL.DTO;
 using QnA.BAL.Services;
@@ -15,13 +16,26 @@ namespace QnA.BAL.Implementation
     {
         private readonly IHashingService _hashingService;
         private readonly ITokenServiceProvider _tokenServiceProvider;
-        private readonly IRepository<AppUser> _appuserRepo;
-        public AuthBL(IHashingService hashingService, ITokenServiceProvider tokenServiceProvider, IRepository<AppUser> appuserRepo)
+        private readonly IAppUserRepository _appuserRepo;
+        public AuthBL(IHashingService hashingService, ITokenServiceProvider tokenServiceProvider, IAppUserRepository appuserRepo)
         {
             _hashingService = hashingService;
             _tokenServiceProvider = tokenServiceProvider;
             _appuserRepo = appuserRepo;
         }
+
+        public async Task<AuthResponseDTO> Register(AuthRequestDTO newGuest)
+        {
+            var appUser = await _appuserRepo.AddAsync(new AppUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = newGuest.UserName,
+                PasswordHash = _hashingService.Hash(newGuest.Password),
+            });
+            if (appUser == null) return null;
+            return _tokenServiceProvider.GenerateAccessToken(appUser);
+        }
+
 
         public async Task<AuthResponseDTO> Login(AuthRequestDTO guest)
         {
@@ -31,5 +45,11 @@ namespace QnA.BAL.Implementation
             if (!isAuthorized) return null;
             return _tokenServiceProvider.GenerateAccessToken(user);
         }
+        public async Task<bool> CheckIfUserNameExist(string userName)
+        {
+            return await _appuserRepo.IsUserNameExist(userName);
+        }
+
+
     }
 }

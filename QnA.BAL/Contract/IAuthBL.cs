@@ -9,7 +9,9 @@ namespace QnA.BAL.Contract
 {
     public interface IAuthBL
     {
+        Task<AuthResponseDTO> Register(AuthRequestDTO newGuest);
         Task<AuthResponseDTO> Login(AuthRequestDTO guest);
+        Task<bool> CheckIfUserNameExist(string userName);
 
     }
 }

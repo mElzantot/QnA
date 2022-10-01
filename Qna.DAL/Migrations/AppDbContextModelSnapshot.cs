@@ -62,7 +62,7 @@ namespace Qna.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Answer");
+                    b.ToTable("Answer", (string)null);
                 });
 
             modelBuilder.Entity("QnA.DbModels.AppUser", b =>
@@ -80,7 +80,7 @@ namespace Qna.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUsers");
+                    b.ToTable("AppUsers", (string)null);
                 });
 
             modelBuilder.Entity("QnA.DbModels.Question", b =>
@@ -112,7 +112,7 @@ namespace Qna.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Question");
+                    b.ToTable("Question", (string)null);
                 });
 
             modelBuilder.Entity("QnA.DbModels.Answer", b =>
