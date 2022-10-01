@@ -24,6 +24,16 @@ namespace Qna.DAL.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Question>(entity =>
+            {
+                entity.HasQueryFilter(e => !e.IsDeleted);
+            });
+
+            modelBuilder.Entity<Answer>(entity =>
+            {
+                entity.HasQueryFilter(e => !e.IsDeleted);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
 
