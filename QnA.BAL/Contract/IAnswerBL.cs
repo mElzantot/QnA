@@ -1,4 +1,5 @@
-﻿using QnA.DbModels;
+﻿using QnA.BAL.DTO;
+using QnA.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace QnA.BAL.Contract
 {
     public interface IAnswerBL
     {
-        Task<Answer> AddAnswerAsync();
-        Task<bool> UpdateAnswerVote();
-        Task<bool> DeleteAnswerAsync();
+        Task<AnswerProfile> AddAnswerAsync(AddAnswerDTO answerDTO, string userId);
+        Task<bool> UpdateAnswerVote(int id, VoteType vote, string userId);
+        Task<bool> DeleteAnswerAsync(int questionId, int answerId);
     }
 }

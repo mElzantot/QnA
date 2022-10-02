@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnA", "QnA\QnA.csproj", "{C51C5836-BDF9-4D71-BD45-1C53347136B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QnA", "QnA\QnA.csproj", "{C51C5836-BDF9-4D71-BD45-1C53347136B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnA.DbModels", "QnA.DbModels\QnA.DbModels.csproj", "{D3070E3D-AAA2-4A17-A74A-6733DF18D37F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QnA.DbModels", "QnA.DbModels\QnA.DbModels.csproj", "{D3070E3D-AAA2-4A17-A74A-6733DF18D37F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qna.DAL", "Qna.DAL\Qna.DAL.csproj", "{5306068B-2A73-48C5-9C68-1BBE53104AA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QnA.DAL", "Qna.DAL\QnA.DAL.csproj", "{5306068B-2A73-48C5-9C68-1BBE53104AA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnA.BAL", "QnA.BAL\QnA.BAL.csproj", "{4DE95C16-A2A8-4594-9CFC-905612B5D322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QnA.BAL", "QnA.BAL\QnA.BAL.csproj", "{4DE95C16-A2A8-4594-9CFC-905612B5D322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

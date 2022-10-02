@@ -11,6 +11,11 @@ namespace QnA.Mappers
             CreateMap<Answer, AnswerProfile>()
                 .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
                 .ForMember(dest => dest.VoteScore, opt => opt.MapFrom(src => src.UpVotes - src.DownVotes));
+
+            CreateMap<AddAnswerDTO, Answer>()
+                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
+                .ForMember(dest => dest.QuestionId, opt => opt.MapFrom(src => src.QuestionId));
+
         }
     }
 }

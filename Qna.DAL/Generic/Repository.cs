@@ -39,7 +39,7 @@ namespace Qna.DAL.Generic
             return await entities.AnyAsync();
         }
 
-        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await entities.Where(predicate).FirstOrDefaultAsync();
         }
@@ -65,8 +65,13 @@ namespace Qna.DAL.Generic
             T result = await entities.FindAsync(id);
             if (result == null) return false;
             entities.Remove(result);
-            int success = await context.SaveChangesAsync();
-            return success > 0;
+            return await context.SaveChangesAsync() > 0;
+        }
+
+        public virtual async Task<bool> RemoveAsync(T entity)
+        {
+            entities.Remove(entity);
+            return await context.SaveChangesAsync() > 0;
         }
     }
 }

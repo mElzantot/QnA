@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace QnA.BAL.DTO
 {
-    public class AnswerProfile
+    public class AddAnswerDTO
     {
-        public int Id { get; set; }
+        [Required(AllowEmptyStrings = false)]
         public string Body { get; set; }
-        public int VoteScore { get; set; }
+        [Required]
+        public int QuestionId { get; set; }
     }
+
 }

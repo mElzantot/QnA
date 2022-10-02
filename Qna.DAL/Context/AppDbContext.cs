@@ -24,6 +24,7 @@ namespace Qna.DAL.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Vote>().HasKey(x => new { x.UserId, x.AnswerId });
             modelBuilder.Entity<Question>(entity =>
             {
                 entity.HasQueryFilter(e => !e.IsDeleted);

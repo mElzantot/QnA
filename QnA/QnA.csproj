@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QnA.BAL\QnA.BAL.csproj" />
-    <ProjectReference Include="..\Qna.DAL\Qna.DAL.csproj" />
+    <ProjectReference Include="..\Qna.DAL\QnA.DAL.csproj" />
   </ItemGroup>
 
 </Project>

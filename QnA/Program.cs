@@ -48,10 +48,13 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped(typeof(IAppUserRepository), typeof(AppUserRepository));
 builder.Services.AddScoped(typeof(IQuestionRepository), typeof(QuestionRepository));
+builder.Services.AddScoped(typeof(IAnswerRepository), typeof(AnswerRepository));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ITokenServiceProvider, TokenServiceProvider>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
 builder.Services.AddScoped<IQuestionBL, QuestionBL>();
+builder.Services.AddScoped<IAnswerBL, AnswerBL>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

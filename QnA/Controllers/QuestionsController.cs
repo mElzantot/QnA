@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QnA.BAL.Contract;
+using QnA.BAL.DTO;
+using QnA.DbModels;
 using System.Security.Claims;
 
 namespace QnA.Controllers
@@ -12,10 +14,12 @@ namespace QnA.Controllers
     public class QuestionsController : ControllerBase
     {
         private readonly IQuestionBL _questionBL;
+        private readonly IAnswerBL _answerBL;
 
-        public QuestionsController(IQuestionBL questionBL)
+        public QuestionsController(IQuestionBL questionBL, IAnswerBL answerBL)
         {
             _questionBL = questionBL;
+            _answerBL = answerBL;
         }
 
         [HttpGet]
@@ -50,6 +54,37 @@ namespace QnA.Controllers
             if (questionProfile == null) return StatusCode(StatusCodes.Status500InternalServerError, "Error while adding Question");
             return StatusCode(StatusCodes.Status201Created, questionProfile);
         }
+
+        [HttpPost("{questionId}/answers")]
+        public async Task<IActionResult> CreateAnswer([FromBody] AddAnswerDTO answerDTO)
+        {
+            if (string.IsNullOrEmpty(answerDTO.Body)) return BadRequest("Answer body can not be empty");
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var answerProfile = await _answerBL.AddAnswerAsync(answerDTO, userId);
+            if (answerProfile == null) return StatusCode(StatusCodes.Status500InternalServerError, "Error while adding Question");
+            return StatusCode(StatusCodes.Status201Created, answerProfile);
+        }
+
+        [HttpDelete("{questionId}/answers/{answerId}")]
+        public async Task<IActionResult> Delete(int questionId, int answerId)
+        {
+            var result = await _answerBL.DeleteAnswerAsync(questionId, answerId);
+            return Ok(result);
+        }
+
+        [HttpPut("{questionId}/answers/{answerId}/votes")]
+        public async Task<IActionResult> Vote(int questionId, int answerId, [FromQuery] VoteType vote)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var result = await _answerBL.UpdateAnswerVote(answerId, vote, userId);
+            return Ok(result);
+        }
+
+
+
+
+
+
 
 
 

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Qna.DAL\Qna.DAL.csproj" />
+    <ProjectReference Include="..\Qna.DAL\QnA.DAL.csproj" />
     <ProjectReference Include="..\QnA.DbModels\QnA.DbModels.csproj" />
   </ItemGroup>
 
