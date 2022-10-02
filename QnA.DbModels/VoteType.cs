@@ -8,6 +8,7 @@ namespace QnA.DbModels
 {
     public enum VoteType
     {
+        UnVote = 0,
         Up = 1,
         Down = 2
     }

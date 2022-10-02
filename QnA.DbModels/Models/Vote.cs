@@ -11,11 +11,12 @@ namespace QnA.DbModels
     [Table("Vote")]
     public class Vote
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public VoteType VoteType { get; set; }
+
+        [Required]
         public int AnswerId { get; set; }
+        [Required]
         public string UserId { get; set; }
 
         [ForeignKey("AnswerId")]
