@@ -80,14 +80,5 @@ namespace QnA.Controllers
             return Ok(result);
         }
 
-
-
-
-
-
-
-
-
-
     }
 }
