@@ -30,7 +30,7 @@ namespace QnA.Testing
             appuserRepo.Setup(x => x.GetAsync(x => x.Name == requestdto.UserName)).ReturnsAsync((AppUser)null);
 
             //----------Act
-            var actual = authBL.Login(requestdto).Result;
+            var actual =await authBL.Login(requestdto);
 
             //----------Assert
             Assert.Null(actual);
@@ -62,7 +62,7 @@ namespace QnA.Testing
             appuserRepo.Setup(x => x.GetAsync(x => x.Name == requestdto.UserName)).ReturnsAsync(appuser);
             hashingService.Setup(x => x.HashCheck(appuser.PasswordHash, requestdto.Password)).Returns(false);
             //----------Act
-            var actual = authBL.Login(requestdto).Result;
+            var actual =await authBL.Login(requestdto);
 
             //----------Assert
             Assert.Null(actual);

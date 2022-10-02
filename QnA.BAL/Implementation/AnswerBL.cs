@@ -15,10 +15,10 @@ namespace QnA.BAL.Implementation
     public class AnswerBL : IAnswerBL
     {
         private readonly IAnswerRepository _answerRepository;
+        private readonly IVoteRepository _voteRepository;
         private readonly IMapper _mapper;
-        private IRepository<Vote> _voteRepository;
 
-        public AnswerBL(IAnswerRepository answerRepository, IRepository<Vote> voteRepository, IMapper mapper)
+        public AnswerBL(IAnswerRepository answerRepository, IVoteRepository voteRepository, IMapper mapper)
         {
             _answerRepository = answerRepository;
             _voteRepository = voteRepository;
