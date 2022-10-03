@@ -28,7 +28,7 @@ namespace Qna.DAL.Repos
         public override async Task<ICollection<Question>> GetAllAsync(Expression<Func<Question, bool>> predicate)
 
         {
-            return await entities.Include(q => q.Answers).Where(predicate).OrderByDescending(q => q.Id)
+            return await entities.Include(q => q.Answers).Where(predicate).OrderByDescending(q => q.QuestionRank)
                     .ToListAsync();
         }
 

@@ -58,7 +58,9 @@ namespace QnA.BAL.Implementation
             Question question = await _questionRepository.GetByIdAsync(questionId);
             int maxUpvotedAnswer = question.Answers.Max(x => x.UpVotes);
             int numberofDownVotedAnswers = question.Answers.Where(x => x.DownVotes < x.UpVotes).Count();
-            question.QuestionRank = (maxUpvotedAnswer * question.Answers.Count()) - numberofDownVotedAnswers;
+            int questionRank = (maxUpvotedAnswer * question.Answers.Count()) - numberofDownVotedAnswers;
+            //------- Rank can not be negative
+            question.QuestionRank = questionRank > 0 ? questionRank : 0;
             return await _questionRepository.UpdateAsync(question);
         }
     }

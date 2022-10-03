@@ -89,6 +89,8 @@ namespace QnA.Testing
 
             voteRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Vote, bool>>>())).ReturnsAsync(new Vote { VoteType = VoteType.Up, UserId = "user1" });
             voteRepository.Setup(x => x.RemoveAsync(It.IsAny<Vote>())).ReturnsAsync(true);
+            voteRepository.Setup(x => x.GetVotesCountForAnswer(It.IsAny<int>())).ReturnsAsync(new List<DAL.DTO.VoteStateDTO>());
+            answerRepo.Setup(x => x.UpdateAnswerVotesCounters(1, 0, 0)).ReturnsAsync(true);
             //----------Act
             var actual = await answerBL.UpdateAnswerVote(1, VoteType.UnVote, "user1");
 
@@ -137,6 +139,9 @@ namespace QnA.Testing
 
             voteRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Vote, bool>>>())).ReturnsAsync((Vote)null);
             voteRepository.Setup(x => x.AddAsync(It.IsAny<Vote>())).ReturnsAsync(new Vote { UserId = "user1", AnswerId = 1, VoteType = VoteType.Up });
+            voteRepository.Setup(x => x.GetVotesCountForAnswer(It.IsAny<int>())).ReturnsAsync(new List<DAL.DTO.VoteStateDTO>());
+            answerRepo.Setup(x => x.UpdateAnswerVotesCounters(1, 0, 0)).ReturnsAsync(true);
+
             //----------Act
             var actual = await answerBL.UpdateAnswerVote(1, VoteType.Up, "user1");
 

@@ -78,6 +78,8 @@ namespace QnA.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var result = await _answerBL.UpdateAnswerVote(answerId, vote, userId);
 
+            //--------If this step will affect performance we can use in as background job by using Hangfire for Ex
+            if (result) await _questionBL.UpdateQuestionRank(questionId);
             return Ok(result);
         }
 

@@ -48,8 +48,7 @@ namespace QnA.BAL.Implementation
         public async Task<bool> UpdateAnswerVote(int answerId, VoteType vote, string userId)
         {
             bool isUpdated = false;
-            //Vote previousVote = await GetUserVoteOnSameAnswerIfExist(userId, answerId);
-            Vote previousVote = null;
+            Vote previousVote = await GetUserVoteOnSameAnswerIfExist(userId, answerId);
             if (previousVote != null && vote == VoteType.UnVote)
             {
                 isUpdated = await _voteRepository.RemoveAsync(previousVote);
