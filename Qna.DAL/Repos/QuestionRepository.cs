@@ -21,7 +21,8 @@ namespace Qna.DAL.Repos
 
         public override async Task<Question?> GetByIdAsync(params object[] id)
         {
-            return await entities.Include(q => q.Answers).Where(q => q.Id == (int)id[0])
+            return await entities.Include(q => q.Answers)
+                                 .Where(q => q.Id == (int)id[0])
                                  .FirstOrDefaultAsync();
         }
 

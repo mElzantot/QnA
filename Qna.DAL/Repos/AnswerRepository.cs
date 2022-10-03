@@ -33,7 +33,9 @@ namespace Qna.DAL.Repos
             entities.Attach(answer);
             answer.UpVotes = upVotes;
             answer.DownVotes = downVotes;
-            return await context.SaveChangesAsync() > 0;
+            var result = await context.SaveChangesAsync() > 0;
+            context.Entry(answer).State = EntityState.Detached;
+            return result;
         }
 
     }
