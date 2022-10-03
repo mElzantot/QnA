@@ -2,6 +2,7 @@
 using Qna.DAL.DBContext;
 using Qna.DAL.Generic;
 using Qna.DAL.Repos_Interfaces;
+using QnA.DAL.DTO;
 using QnA.DbModels;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,15 @@ namespace Qna.DAL.Repos
         {
         }
 
+        public async Task<List<VoteStateDTO>> GetVotesCountForAnswer(int answerId)
+        {
+            return await entities.Where(x => x.AnswerId == answerId)
+                          .GroupBy(x => x.VoteType)
+                          .Select(votes => new VoteStateDTO
+                          {
+                              Vote = votes.Key,
+                              Count = votes.Count()
+                          }).ToListAsync();
+        }
     }
 }

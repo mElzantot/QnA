@@ -77,6 +77,7 @@ namespace QnA.Controllers
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var result = await _answerBL.UpdateAnswerVote(answerId, vote, userId);
+
             return Ok(result);
         }
 

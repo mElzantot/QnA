@@ -73,5 +73,12 @@ namespace Qna.DAL.Generic
             entities.Remove(entity);
             return await context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> UpdateAsync(T entity)
+        {
+            if (entity == null) return false;
+            entities.Update(entity);
+            return await context.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Qna.DAL.Generic;
+using QnA.DAL.DTO;
 using QnA.DbModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Qna.DAL.Repos_Interfaces
 {
     public interface IVoteRepository : IRepository<Vote>
     {
-        Task<bool> RemoveAsync(Vote vote);
+        Task<List<VoteStateDTO>> GetVotesCountForAnswer(int answerId);
 
     }
 }

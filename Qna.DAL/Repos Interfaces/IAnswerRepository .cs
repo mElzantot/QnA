@@ -10,5 +10,7 @@ namespace Qna.DAL.Repos_Interfaces
 {
     public interface IAnswerRepository : IRepository<Answer>
     {
+        Task<bool> UpdateAnswerVotesCounters(int answerId, int upVotes, int downVotes);
+
     }
 }

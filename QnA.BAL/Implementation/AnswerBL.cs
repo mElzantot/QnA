@@ -47,10 +47,12 @@ namespace QnA.BAL.Implementation
 
         public async Task<bool> UpdateAnswerVote(int answerId, VoteType vote, string userId)
         {
-            Vote previousVote = await GetUserVoteOnSameAnswerIfExist(userId, answerId);
+            bool isUpdated = false;
+            //Vote previousVote = await GetUserVoteOnSameAnswerIfExist(userId, answerId);
+            Vote previousVote = null;
             if (previousVote != null && vote == VoteType.UnVote)
             {
-                return await _voteRepository.RemoveAsync(previousVote);
+                isUpdated = await _voteRepository.RemoveAsync(previousVote);
             }
             else if (previousVote == null && vote != VoteType.UnVote)
             {
@@ -60,9 +62,13 @@ namespace QnA.BAL.Implementation
                     UserId = userId,
                     VoteType = vote
                 });
-                return newVote != null;
+                isUpdated = newVote != null;
             }
-            return false;
+            if (isUpdated)
+            {
+                await UpdateAnswerVoteCounter(answerId);
+            }
+            return isUpdated;
         }
 
 
@@ -73,6 +79,17 @@ namespace QnA.BAL.Implementation
         private async Task<Vote> GetUserVoteOnSameAnswerIfExist(string userId, int answerId)
         {
             return await _voteRepository.GetAsync(v => v.UserId == userId && v.AnswerId == answerId);
+        }
+
+        //-------- We can Use a trigger to update those records 
+        //------- Trigger after (Insert , Update , Delete ) on Vote Table 
+        //------- but I perfer to keep all my BL in Code however that is not affecting app performance 
+        private async Task<bool> UpdateAnswerVoteCounter(int answerId)
+        {
+            var votesCount = await _voteRepository.GetVotesCountForAnswer(answerId);
+            int upVotes = votesCount.FirstOrDefault(x => x.Vote == VoteType.Up)?.Count ?? 0;
+            int downVotes = votesCount.FirstOrDefault(x => x.Vote == VoteType.Down)?.Count ?? 0;
+            return await _answerRepository.UpdateAnswerVotesCounters(answerId, upVotes, downVotes);
         }
 
     }

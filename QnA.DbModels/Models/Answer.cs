@@ -15,6 +15,11 @@ namespace QnA.DbModels
         public int Id { get; set; }
         [Required]
         public string Body { get; set; }
+
+        //------ I decide to save number of Up/Down votes here and update it with every change in votes 
+         //      instead of calc it every time I need it 
+         //------- as I think in SYs like that number of Read operation will be so huge comparing to write operation 
+         //--- so I found It is better to keep this info here as it will be easier to access although we consumed more DB space
         public int UpVotes { get; set; }
         public int DownVotes { get; set; }
 

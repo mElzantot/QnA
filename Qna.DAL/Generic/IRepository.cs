@@ -17,6 +17,7 @@ namespace Qna.DAL.Generic
         Task<ICollection<T>> AddRangeAsync(ICollection<T> newEntites);
         Task<bool> RemoveByIdAsync(params object[] id);
         Task<bool> RemoveAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
         Task<bool> Any();
     }
 }

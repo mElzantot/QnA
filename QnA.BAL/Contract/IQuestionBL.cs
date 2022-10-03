@@ -14,6 +14,7 @@ namespace QnA.BAL.Contract
         Task<IEnumerable<QuestionProfile>> GetAllQuestionsAsync();
         Task<QuestionProfile> GetQuestionWithAnswersAsync(int id);
         Task<bool> DeleteQuestion(int id);
+        Task<bool> UpdateQuestionRank(int questionId);
 
     }
 }
