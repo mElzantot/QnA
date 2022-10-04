@@ -27,16 +27,6 @@ namespace Qna.DAL.Repos
             return await context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateAnswerVotesCounters(int answerId, int upVotes, int downVotes)
-        {
-            Answer answer = new Answer { Id = answerId };
-            entities.Attach(answer);
-            answer.UpVotes = upVotes;
-            answer.DownVotes = downVotes;
-            var result = await context.SaveChangesAsync() > 0;
-            context.Entry(answer).State = EntityState.Detached;
-            return result;
-        }
 
     }
 }

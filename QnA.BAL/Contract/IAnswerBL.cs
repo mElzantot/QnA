@@ -11,7 +11,7 @@ namespace QnA.BAL.Contract
     public interface IAnswerBL
     {
         Task<AnswerProfile> AddAnswerAsync(AddAnswerDTO answerDTO, string userId);
-        Task<bool> UpdateAnswerVote(int id, VoteType vote, string userId);
+        Task<bool> UpdateAnswerVote(int questionId , int answerId, VoteType vote, string userId);
         Task<bool> DeleteAnswerAsync(int questionId, int answerId);
     }
 }

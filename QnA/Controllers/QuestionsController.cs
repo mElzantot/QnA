@@ -76,7 +76,8 @@ namespace QnA.Controllers
         public async Task<IActionResult> Vote(int questionId, int answerId, [FromQuery] VoteType vote)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var result = await _answerBL.UpdateAnswerVote(answerId, vote, userId);
+
+            var result = await _answerBL.UpdateAnswerVote(questionId, answerId, vote, userId);
 
             //--------If this step will affect performance we can use in as background job by using Hangfire for Ex
             if (result) await _questionBL.UpdateQuestionRank(questionId);

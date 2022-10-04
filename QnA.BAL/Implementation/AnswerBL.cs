@@ -45,13 +45,24 @@ namespace QnA.BAL.Implementation
             return await _answerRepository.RemoveAsync(answer);
         }
 
-        public async Task<bool> UpdateAnswerVote(int answerId, VoteType vote, string userId)
+        //--------- Related to Updating Answer Up/Down votes
+        //-------- We can Use a trigger to update those records 
+        //------- Trigger after (Insert , Update , Delete ) on Vote Table 
+        //------- but I perfer to keep all my BL in Code however that is not affecting app performance 
+
+        public async Task<bool> UpdateAnswerVote(int questionId, int answerId, VoteType vote, string userId)
         {
+            var answer = await GetAnswer(questionId, answerId);
+            if (answer == null) return false;
+
             bool isUpdated = false;
             Vote previousVote = await GetUserVoteOnSameAnswerIfExist(userId, answerId);
             if (previousVote != null && vote == VoteType.UnVote)
             {
                 isUpdated = await _voteRepository.RemoveAsync(previousVote);
+                if (previousVote.VoteType == VoteType.Up) answer.UpVotes--;
+                else answer.DownVotes--;
+                await _answerRepository.UpdateAsync(answer);
             }
             else if (previousVote == null && vote != VoteType.UnVote)
             {
@@ -62,10 +73,17 @@ namespace QnA.BAL.Implementation
                     VoteType = vote
                 });
                 isUpdated = newVote != null;
-            }
-            if (isUpdated)
-            {
-                await UpdateAnswerVoteCounter(answerId);
+
+                if (isUpdated && vote == VoteType.Up)
+                {
+                    answer.UpVotes++;
+                    await _answerRepository.UpdateAsync(answer);
+                }
+                else if (isUpdated && vote == VoteType.Down)
+                {
+                    answer.DownVotes++;
+                    await _answerRepository.UpdateAsync(answer);
+                }
             }
             return isUpdated;
         }
@@ -80,16 +98,6 @@ namespace QnA.BAL.Implementation
             return await _voteRepository.GetAsync(v => v.UserId == userId && v.AnswerId == answerId);
         }
 
-        //-------- We can Use a trigger to update those records 
-        //------- Trigger after (Insert , Update , Delete ) on Vote Table 
-        //------- but I perfer to keep all my BL in Code however that is not affecting app performance 
-        private async Task<bool> UpdateAnswerVoteCounter(int answerId)
-        {
-            var votesCount = await _voteRepository.GetVotesCountForAnswer(answerId);
-            int upVotes = votesCount.FirstOrDefault(x => x.Vote == VoteType.Up)?.Count ?? 0;
-            int downVotes = votesCount.FirstOrDefault(x => x.Vote == VoteType.Down)?.Count ?? 0;
-            return await _answerRepository.UpdateAnswerVotesCounters(answerId, upVotes, downVotes);
-        }
 
     }
 }
