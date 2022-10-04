@@ -42,3 +42,6 @@ to run it first you need to run CMD in solution folder then use this command to 
  - Passwoed : "SaaS1"
   > P.S There is a register API you can use it to add new users 
 
+## Important Note
+- I used Repository pattern to manage operations on Db entites , we can also use unit of work 
+- It will be better to use CQRS pattern to handle (add-update) operation . especially for Vote entity to encapsulate its logic .
