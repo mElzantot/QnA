@@ -8,6 +8,8 @@ using Qna.DAL.Repos_Interfaces;
 using QnA.BAL.Contract;
 using QnA.BAL.Implementation;
 using QnA.BAL.Services;
+using QnA.Extensions;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,42 +21,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"))
     );
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
-{
-    o.RequireHttpsMetadata = false;
-    o.SaveToken = false;
-    o.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-        ValidAudience = builder.Configuration["JWT:ValidAudience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
-
-    };
-});
+StartupExtensions.AddQnAAuthentication(builder.Services, builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
+StartupExtensions.AddQnASwagger(builder.Services, "QnA", "V1", $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+StartupExtensions.AddQnADependencies(builder.Services);
 
-
-builder.Services.AddScoped(typeof(IAppUserRepository), typeof(AppUserRepository));
-builder.Services.AddScoped(typeof(IQuestionRepository), typeof(QuestionRepository));
-builder.Services.AddScoped(typeof(IAnswerRepository), typeof(AnswerRepository));
-builder.Services.AddScoped(typeof(IVoteRepository), typeof(VoteRepository));
-builder.Services.AddScoped<ITokenServiceProvider, TokenServiceProvider>();
-builder.Services.AddScoped<IHashingService, HashingService>();
-builder.Services.AddScoped<IAuthBL, AuthBL>();
-builder.Services.AddScoped<IQuestionBL, QuestionBL>();
-builder.Services.AddScoped<IAnswerBL, AnswerBL>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
