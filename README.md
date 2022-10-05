@@ -4,6 +4,7 @@
 
 - App will support many users who can **add question and answer**on others question
 - users also can **upvote and downvote** others answers
+- **Rank questions** based on Number of answers & Users votes 
 
 ## QnA Structure
 

@@ -62,6 +62,9 @@ namespace QnA.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var answerProfile = await _answerBL.AddAnswerAsync(answerDTO, userId);
             if (answerProfile == null) return StatusCode(StatusCodes.Status500InternalServerError, "Error while adding Question");
+
+            //--------If this step will affect performance we can use in as background job by using Hangfire for Ex
+            await _questionBL.UpdateQuestionRank(answerDTO.QuestionId);
             return StatusCode(StatusCodes.Status201Created, answerProfile);
         }
 
